@@ -68,7 +68,7 @@ function removeListElement() {
 
 // Oppgave 7
 const inputBox = document.getElementById("name");
-inputBox.addEventListener("input", validate);
+inputBox.addEventListener("keyup", validate);
 const orderButton = document.getElementById("order");
 
 function validate() {
