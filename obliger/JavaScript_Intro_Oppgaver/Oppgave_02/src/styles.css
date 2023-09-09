@@ -3,9 +3,58 @@ body {
 }
 
 #main {
-  max-width: 600px;
+  max-width: 1000px;
   margin: 2rem auto;
 }
+
+#container {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  padding: 60px;
+  background-color: rgb(238, 238, 238);
+  border-radius: 0.5rem;
+}
+
+#nameWrapper{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#nameWrapper input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+
+#ageWrapper{
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#ageWrapper input {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #ccc;
+}
+
+#ageWrapper button {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  background-color: black;
+  color: white;
+}
+#ageWrapper button:hover {
+  background-color: rgb(26, 87, 253);
+  color: rgb(255, 255, 255);
+}
+
 
 #users {
   list-style: none;
@@ -24,5 +73,6 @@ body {
   list-style-type: none;
   margin: 0;
   border: 1px solid #ccc;
+  border-radius: 0.5rem;
   padding: 1rem;
 }

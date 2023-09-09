@@ -10,79 +10,76 @@ const names = [
     'Anne',
     'Amanda',
     'Morgan',
-];
-
-const users = [];
-
-const createRandomAge = () => {
+  ];
+  
+  const users = [];
+  
+  const createRandomAge = () => {
     return Math.floor(Math.random() * 100 + 1);
-};
-
-const createUsers = (userCount) => {
+  };
+  
+  const createUsers = (userCount) => {
     for (let i = 0; i < userCount; i++) {
-        const user = {
-            id: i,
-            name: names[i],
-            age: createRandomAge(),
-        };
-        users.push(user);
+      const user = {
+        id: i,
+        name: names[i],
+        age: createRandomAge(),
+      };
+      users.push(user);
     }
+  };
+  
+  createUsers(11);
+
+  console.log(users);
+  
+
+const searchInput = document.getElementById('name');
+const filterInput = document.getElementById('age');
+const filterButton = document.getElementById('filter');
+const userUl = document.getElementById('users');
+
+const createTableUI = (users) => {
+  userUl.innerHTML = null;
+  userUl.innerHTML += `<li><span>Id</span><span>Navn</span><span>Alder</span></li>`;
+  for (const user of users) {
+    userUl.innerHTML += `<li><span>${user.id}</span><span>${user.name}</span><span>${user.age}</span></li>`;
+  }
 };
 
-createUsers(11);
-
-
-
-// TODO: Hent HTML #id med getElementById
-// TODO: Lag en funksjon som kan brukes til å skrive ut HTMLen for å se brukerene. Du kan bruke users importert over for å hente en liste med 10 brukere
-const displayUsers = (userList) => {
-    // Nullstill listen først
-    let usersList = document.getElementById("users").innerHTML = '';
-    if(userList.length > 0){
-        for(let user of userList) {
-            usersList.innerHTML += `<li>${user.name}</li>`;
-        }
+const handleSearch = () => {
+  const searchName = searchInput.value;
+  if (searchName) {
+    const searchResult = users.find(user => user.name.toLowerCase().includes(searchName.toLowerCase()));
+    if (searchResult) {
+      createTableUI([searchResult]);
     } else {
-        usersList.innerHTML += `<span>Ingen resultater funnet</span>`;
+      userUl.innerHTML = `<li>Ingen resultater funnet for søket: ${searchName}</li>`;
     }
+  } else {
+    createTableUI(users);
+  }
 };
 
-
-displayUsers(users);
-
-
-// TODO: Lag en funksjon som håndterer søket og oppdaterer grensesnittet med resultatet fra søket
-function handleSearch() {
-    let error = document.getElementById('error');
-    let name = document.getElementById("name").value;
-
-    // Sjekk om navnet inneholder et tall
-    if (/\d/.test(name)) {
-        error.textContent = 'Navnet kan ikke inneholde tall!';
-        return;
+const handleFilter = () => {
+  const filterValue = parseInt(filterInput.value);
+  if (filterValue && Number(filterValue)) {
+    const filterResult = users.filter(user => user.age >= filterValue);
+    if (filterResult.length > 0) {
+      createTableUI(filterResult);
+    } else {
+      userUl.innerHTML = `<li>Ingen brukere funnet med alder over ${filterValue}</li>`;
     }
+  } else {
+    createTableUI(users);
+  }
+};
 
-    let searchResult = users.filter(user => user.name.toLowerCase().includes(name.toLowerCase()));
-    displayUsers(searchResult);
-}
+const main = () => {
+  createTableUI(users);
+};
 
-document.getElementById("filter").addEventListener("click", handleFilter);
-// TODO: Lag en funksjon som håndterer filteret og oppdaterer grensesnittet med resultatet fra filteret
-function handleFilter() {
-    let age = parseInt(document.getElementById("age").value, 10);
-    if(isNaN(age)) {
-        // Håndter feil hvis verdien i alderfeltet ikke er et tall
-        usersList.innerHTML = `<span>Ugyldig alder oppgitt</span>`;
-        return;
-    }
+main();
 
-    let filterResults = users.filter(user => user.age === age);
-    displayUsers(filterResults);
-}
-
-// TODO: Lytt til tastatur klikk på søkefeltet, den skal trigge søkefunksjonen (handleSearch)
-document.getElementById("name").addEventListener("keyup", handleSearch);
-
-// TODO: Lytt til klikk på filter-knappen, den skal trigge filterfunksjonen (handleFilter)
-document.getElementById("filter").addEventListener("click", handleFilter);
-
+searchInput.addEventListener('keyup', handleSearch);
+filterButton.addEventListener('click', handleFilter);

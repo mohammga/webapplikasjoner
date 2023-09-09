@@ -87,7 +87,7 @@ document.getElementById("color").addEventListener("click", function () {
 
     listItems.forEach((item, index) => {
         if ((index + 1) % 2 === 0) {
-            // Partall (husk at indeksering starter fra 0, så vi legger til 1 før sjekken)
+            // Partall
             item.style.border = "2px solid pink";
         } else {
             // Oddetall
